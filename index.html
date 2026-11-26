@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171b18">
+<meta name="description" content="مُسند — أداة تجريبية للتعرّف على حروف الكتابة بالمسند والنقل الحرفي بين العربية ورموز المسند.">
+<title>مُسند | MUSNAD</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+:root{--bg:#171b18;--panel:#202722;--panel2:#252e28;--gold:#c6a66a;--gold2:#e0c58e;--ink:#f1eadb;--muted:#aaa99c;--line:#3c453d;--green:#7d9279}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#394334 0%,var(--bg) 55%);color:var(--ink);font-family:'IBM Plex Sans Arabic',sans-serif;min-height:100vh}
+header{max-width:1050px;margin:auto;padding:34px 22px 20px;text-align:center}
+.mark{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border:1px solid #8d754c;border-radius:50%;color:var(--gold2);font-size:30px;margin-bottom:12px}
+h1{font-family:'Amiri',serif;font-size:clamp(38px,7vw,58px);margin:0;color:var(--gold2);font-weight:700;letter-spacing:.5px}
+.en{font:600 12px sans-serif;letter-spacing:5px;color:#b4aa92;margin-top:0}
+.tag{color:var(--muted);font-size:14px;margin:14px 0 0}
+main{max-width:900px;margin:22px auto 60px;padding:0 18px}
+.panel{background:linear-gradient(145deg,rgba(38,47,40,.96),rgba(29,35,31,.98));border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 18px 55px #0004}
+.tabs{display:flex;gap:8px;margin-bottom:18px}.tab{flex:1;border:1px solid var(--line);background:#1a211c;color:var(--muted);padding:12px;border-radius:11px;font:600 14px inherit;cursor:pointer}.tab.active{background:#55472f;border-color:#92764a;color:#fff0cf}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.field label{display:block;color:var(--muted);font-size:12px;margin:0 0 7px}.field select{width:100%;background:#171e19;border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--ink);font:inherit;outline:none}
+textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--ink);font:18px/1.9 'IBM Plex Sans Arabic',sans-serif;outline:none}textarea:focus,.field select:focus{border-color:var(--gold)}
+.output-wrap{margin-top:15px}.out-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--muted);font-size:13px}.output{min-height:145px;padding:18px;border:1px solid #66583d;background:#171d18;border-radius:12px;color:var(--gold2);font:30px/1.8 'Amiri',serif;overflow-wrap:anywhere;white-space:pre-wrap}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid var(--line);background:#29332b;color:var(--ink);padding:10px 17px;border-radius:10px;font:600 13px inherit;cursor:pointer}.btn.primary{background:var(--gold);color:#201d16;border-color:var(--gold)}.btn:hover{filter:brightness(1.12)}
+.note{margin:16px 0 0;padding:12px 14px;border-right:3px solid var(--gold);background:#272a21;border-radius:7px;color:#c8c2b3;font-size:12px;line-height:1.8}
+.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.latin{font:11px sans-serif;color:var(--muted);direction:ltr}
+footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
+@media(max-width:560px){.panel{padding:15px}.controls{grid-template-columns:1fr}.tabs{flex-direction:column}.output{font-size:25px}}
+</style>
+</head>
+<body>
+<header><div class="mark">𐩠</div><h1>مُسند</h1><div class="en">M U S N A D</div><p class="tag">منقوش في التاريخ، حيّ بالتقنية</p></header>
+<main>
+<section class="panel">
+<div class="tabs"><button class="tab active" id="toMusnad">العربية ← المسند</button><button class="tab" id="toArabic">المسند ← العربية</button></div>
+<div class="controls">
+<div class="field"><label for="language">اللغة الجنوبية العربية القديمة</label><select id="language"><option value="sab">السبئية</option><option value="min">المعينية</option><option value="qat">القتبانية</option><option value="had">الحضرمية</option></select></div>
+<div class="field"><label for="mode">نوع المعالجة</label><select id="mode"><option value="literal">نقل حرفي تقريبي</option></select></div>
+</div>
+<label id="inputLabel" for="source" style="display:block;color:var(--muted);font-size:13px;margin:0 0 8px">اكتب النص العربي هنا</label>
+<textarea id="source" placeholder="اكتب أو الصق النص هنا..."></textarea>
+<div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div></div>
+<div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
+<p class="note">تنبيه علمي: المسند نظام كتابة استُخدم لتدوين لغات جنوب الجزيرة العربية القديمة، وليس لغة واحدة. هذه النسخة تقدم مقابلات حرفية/صوتية تقريبية للتجربة والتعرّف على شكل الحروف، ولا تمثل ترجمة لغوية موثقة أو إعادة بناء دقيقة للغات القديمة. جداول المقابلة تحتاج إلى مراجعة مختصين.</p>
+</section>
+<section class="section"><h2>أبجدية المسند</h2><div class="alphabet" id="alphabet"></div></section>
+</main>
+<footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
+<script>
+const letters=[
+['𐩠','h'],['𐩡','l'],['𐩢','ḥ'],['𐩣','m'],['𐩤','q'],['𐩥','w'],['𐩦','š'],['𐩧','r'],['𐩨','b'],['𐩩','t'],['𐩪','s¹'],['𐩫','k'],['𐩬','n'],['𐩭','ḫ'],['𐩮','ṣ'],['𐩯','s²'],['𐩰','f'],['𐩱','ʾ'],['𐩲','ʿ'],['𐩳','ḍ'],['𐩴','g'],['𐩵','d'],['𐩶','ġ'],['𐩷','ṭ'],['𐩸','z'],['𐩹','ḏ'],['𐩺','y'],['𐩻','ṯ'],['𐩼','ẓ']
+];
+const arTo=[['ا','𐩱'],['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ء','𐩱'],['ب','𐩨'],['ت','𐩩'],['ث','𐩻'],['ج','𐩴'],['ح','𐩢'],['خ','𐩭'],['د','𐩵'],['ذ','𐩹'],['ر','𐩧'],['ز','𐩸'],['س','𐩪'],['ش','𐩦'],['ص','𐩮'],['ض','𐩳'],['ط','𐩷'],['ظ','𐩼'],['ع','𐩲'],['غ','𐩶'],['ف','𐩰'],['ق','𐩤'],['ك','𐩫'],['ل','𐩡'],['م','𐩣'],['ن','𐩬'],['ه','𐩠'],['ة','𐩠'],['و','𐩥'],['ؤ','𐩥'],['ي','𐩺'],['ى','𐩺'],['ئ','𐩺']];
+const musTo=new Map(arTo.map(([a,m])=>[m,a]));
+let direction='toMusnad';
+const $=id=>document.getElementById(id);
+function convert(){const s=$('source').value; if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
+let out=''; for(const ch of s){if(direction==='toMusnad'){const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;}else{out+=musTo.get(ch)||ch;}} $('result').textContent=out;}
+function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'النص بالعربية';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
+$('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
+$('alphabet').innerHTML=letters.map(([g,n])=>'<div class="letter"><div class="glyph">'+g+'</div><div class="latin">'+n+'</div></div>').join('');
+</script>
+</body></html>
