@@ -97,16 +97,19 @@ function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d=
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
 
 function updateKeyboard(){ $('musnadKeyboard').classList.toggle('visible',direction==='toArabic'); }
+let savedStart=0,savedEnd=0;
+$('source').addEventListener('blur',()=>{savedStart=$('source').selectionStart??$('source').value.length;savedEnd=$('source').selectionEnd??savedStart;});
+$('source').addEventListener('click',()=>{savedStart=$('source').selectionStart??$('source').value.length;savedEnd=$('source').selectionEnd??savedStart;});
 function insertAtCursor(value){
- const field=$('source');const start=field.selectionStart??field.value.length;const end=field.selectionEnd??field.value.length;
+ const field=$('source');const start=Math.min(savedStart,field.value.length);const end=Math.min(savedEnd,field.value.length);
  field.value=field.value.slice(0,start)+value+field.value.slice(end);
- const pos=start+value.length;field.setSelectionRange(pos,pos);convert();
+ savedStart=savedEnd=start+value.length;field.setSelectionRange(savedStart,savedEnd);convert();
 }
 $('keyGrid').innerHTML=letters.map(([g])=>'<button type="button" class="key" data-key="'+g+'" aria-label="الحرف '+g+'">'+g+'</button>').join('');
 $('keyGrid').addEventListener('click',e=>{const key=e.target.closest('[data-key]');if(key)insertAtCursor(key.dataset.key);});
 $('keySpace').onclick=()=>insertAtCursor(' ');
-$('keyDelete').onclick=()=>{const field=$('source');let start=field.selectionStart??field.value.length,end=field.selectionEnd??field.value.length;if(start===end&&start>0)start--;field.value=field.value.slice(0,start)+field.value.slice(end);field.setSelectionRange(start,start);convert();};
-$('keyClear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};
+$('keyDelete').onclick=()=>{const field=$('source');let start=Math.min(savedStart,field.value.length),end=Math.min(savedEnd,field.value.length);if(start===end&&start>0){const prev=field.value.charCodeAt(start-1);start-=prev>=0xDC00&&prev<=0xDFFF&&start>1?2:1;}field.value=field.value.slice(0,start)+field.value.slice(end);savedStart=savedEnd=start;field.setSelectionRange(start,start);convert();};
+$('keyClear').onclick=()=>{$('source').value='';savedStart=savedEnd=0;$('result').textContent='ستظهر النتيجة هنا';};
 
 updateKeyboard();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
