@@ -35,7 +35,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <header><div class="mark">𐩠</div><h1>مُسند</h1><div class="en">M U S N A D</div><p class="tag">منقوش في التاريخ، حيّ بالتقنية</p></header>
 <main>
 <section class="panel">
-<div class="tabs"><button class="tab active" id="toMusnad">العربية ← المسند</button><button class="tab" id="toArabic">المسند ← العربية</button></div>
+<div class="tabs"><button class="tab active" id="toMusnad">المسند ← العربية</button><button class="tab" id="toArabic">العربية ← المسند</button></div>
 <div class="controls">
 <div class="field"><label for="language">اللغة الجنوبية العربية القديمة</label><select id="language"><option value="sab">السبئية</option><option value="min">المعينية</option><option value="qat">القتبانية</option><option value="had">الحضرمية</option></select></div>
 <div class="field"><label for="mode">طريقة التحويل</label><select id="mode"><option value="consonants">تقريب الصوامت (تجريبي)</option></select></div>
@@ -72,6 +72,7 @@ const musTo=new Map([
 ['𐩹','ذ'],['𐩺','ي'],['𐩻','ث'],['𐩼','ظ'],['𐩽',' ']
 ]);
 let direction='toMusnad';
+$('toMusnad').setAttribute('aria-pressed','true');$('toArabic').setAttribute('aria-pressed','false');
 const $=id=>document.getElementById(id);
 const languageProfiles={
 sab:{title:'السبئية',description:'تستخدم السبئية h- في صياغة السببية، وتظهر بادئة h- أيضاً في بعض الضمائر.'},
@@ -88,7 +89,7 @@ let out=''; for(const ch of s){if(direction==='toMusnad'){
 // الحروف غير الممثلة مباشرة (مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة) تبقى كما هي حتى لا تضيع عند الرجوع.
 const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
 }else{out+=musTo.has(ch)?musTo.get(ch):ch;}} $('result').textContent=out;}
-function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
+function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('toMusnad').setAttribute('aria-pressed',String(d==='toMusnad'));$('toArabic').setAttribute('aria-pressed',String(d==='toArabic'));$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
 $('alphabet').innerHTML=letters.map(([g,n])=>'<button type="button" class="letter" data-glyph="'+g+'" aria-label="إضافة الحرف '+g+'"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></button>').join('');
