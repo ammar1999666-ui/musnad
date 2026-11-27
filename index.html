@@ -53,7 +53,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 
 <div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div><div class="conversion-hint" id="conversionHint" aria-live="polite" hidden></div></div>
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
-<p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، يمكن استخدامه هنا تقريباً لكتابة الجيم العربية، مع التنبيه إلى أن صوت g ليس مطابقاً بالضرورة لصوت الجيم. لذلك فالتحويل تقريبي وليس ترجمة. تُحوّل الألف وأشكال الهمزة إلى 𐩱، والألف المقصورة إلى 𐩺، والتاء المربوطة إلى 𐩩 كتقريبات عملية فقط؛ وقد تضيع بعض الفروق عند التحويل العكسي. وفي الاتجاه العكسي تظهر جميع الحروف بمقابلات عربية مبسطة دون رموز صوتية داخل الكلمات. بعض الأصوات الجنوبية المتمايزة، مثل s¹ وs³، قد تظهر بالحرف العربي نفسه «س»، لذلك لا يمكن استعادة التمييز الصوتي الأصلي من المقابل العربي وحده. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
+<p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، يمكن استخدامه هنا تقريباً لكتابة الجيم العربية، مع التنبيه إلى أن صوت g ليس مطابقاً بالضرورة لصوت الجيم. لذلك فالتحويل تقريبي وليس ترجمة. تُحوّل الألف وأشكال الهمزة إلى 𐩱، والألف المقصورة إلى 𐩺، والتاء المربوطة إلى 𐩩 كتقريبات عملية فقط؛ وقد تضيع بعض الفروق عند التحويل العكسي. وفي الاتجاه العكسي تُستخدم مقابلات عربية تقريبية، مع علامات صوتية صغيرة للتمييز بين الصفيريات الثلاث: س¹ وش² وس³. كما تظهر ملاحظات عند الرموز التي قد تقابل أكثر من حرف عربي حديث؛ لأن التحويل إلى المسند يفقد بعض الفروق الإملائية ولا يمكن عكسه بصورة مؤكدة. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
 </section>
 <section class="section"><h2>الأبجدية الجنوبية العربية — 29 حرفاً</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">يعرض الجدول الحروف بترتيبها الأبجدي المسندي، مع النقل الصوتي العلمي وشرح عربي تقريبي. اضغط على أي حرف لعرض بطاقة معلوماته.</p><div class="alphabet" id="alphabet"></div><div class="letter-modal" id="letterModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle"><div class="letter-detail" id="letterDetail" aria-live="polite"></div></div><p class="note">كيف تقرأ الرموز؟ الصيغ مثل s¹ وs² وs³ وḥ وḫ هي اصطلاحات للنقل الصوتي العلمي، وليست حروفاً إنجليزية داخل المسند. الشرح العربي بجانبها للتقريب فقط، ولا يعني تطابق الصوت القديم مع نطق الحرف العربي الحديث. خصوصاً الصفيريات الثلاث s¹ وs² وs³، فهي أصوات متمايزة لا تقابلها ثلاثة أحرف عربية حديثة مقابلة بدقة.</p></section>
 </main>
@@ -73,9 +73,9 @@ const arTo=[['ء','𐩱'],['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ٱ','𐩱'
 // التحويل العكسي مطابق لترتيب رموز Unicode وقيمها الصوتية الأكاديمية.
 const musTo=new Map([
 ['𐩠','ه'],['𐩡','ل'],['𐩢','ح'],['𐩣','م'],['𐩤','ق'],
-['𐩥','و'],['𐩦','ش'],['𐩧','ر'],['𐩨','ب'],['𐩩','ت'],
-['𐩪','س'],['𐩫','ك'],['𐩬','ن'],['𐩭','خ'],['𐩮','ص'],
-['𐩯','س'],['𐩰','ف'],['𐩱','ء'],['𐩲','ع'],['𐩳','ض'],
+['𐩥','و'],['𐩦','ش²'],['𐩧','ر'],['𐩨','ب'],['𐩩','ت'],
+['𐩪','س¹'],['𐩫','ك'],['𐩬','ن'],['𐩭','خ'],['𐩮','ص'],
+['𐩯','س³'],['𐩰','ف'],['𐩱','ء'],['𐩲','ع'],['𐩳','ض'],
 ['𐩴','گ'],['𐩵','د'],['𐩶','غ'],['𐩷','ط'],['𐩸','ز'],
 ['𐩹','ذ'],['𐩺','ي'],['𐩻','ث'],['𐩼','ظ'],['𐩽',' ']
 ]);
@@ -107,11 +107,14 @@ if(s.includes('س')||s.includes('ش'))notices.push('تنبيه صوتي: حُو�
 if(notices.length){hint.textContent='ملاحظات التحويل: '+notices.join(' ');hint.hidden=false;}
 }else{
 const notices=[];
-if(s.includes('𐩪')||s.includes('𐩦')||s.includes('𐩯'))notices.push('الرموز 𐩪 و𐩦 و𐩯 تمثل الصفيريات s¹ وs² وs³. المقابل العربي هنا تقريبي ومبسّط، وقد لا يحافظ على الفروق الصوتية الأصلية.');
+if(s.includes('𐩪')||s.includes('𐩦')||s.includes('𐩯'))notices.push('حُفظ التمييز بين الصفيريات في النتيجة: 𐩪 ← س¹، و𐩦 ← ش²، و𐩯 ← س³. الأرقام الصغيرة علامات نقل صوتي لتفريق الأصوات، وليست كتابة عربية إملائية معتادة.');
+if(s.includes('𐩱'))notices.push('الرمز 𐩱 يُقرأ هنا «ء»، لكنه قد يكون ناتجاً عن الألف أو أحد أشكال الهمزة (ا، أ، إ، آ، ٱ، ؤ، ئ)؛ لذلك لا يمكن معرفة الحرف الأصلي من الرمز وحده.');
+if(s.includes('𐩩'))notices.push('الرمز 𐩩 يظهر «ت»، لكنه قد يكون ناتجاً عن التاء أو التاء المربوطة؛ لا يمكن استعادة هذا الفرق بعد التحويل.');
+if(s.includes('𐩺'))notices.push('الرمز 𐩺 يظهر «ي»، لكنه قد يكون ناتجاً عن الياء أو الألف المقصورة «ى»؛ لا يمكن استعادة الحرف الأصلي يقيناً.');
 if(s.includes('𐩴'))notices.push('الرمز 𐩴 يظهر بالحرف «گ» لتمييز قيمته g عن الجيم العربية.');
 if(notices.length){hint.textContent='ملاحظة على القراءة: '+notices.join(' ');hint.hidden=false;}
 }}
-function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('toMusnad').setAttribute('aria-pressed',String(d==='toMusnad'));$('toArabic').setAttribute('aria-pressed',String(d==='toArabic'));$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';updateKeyboard();}
+function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('toMusnad').setAttribute('aria-pressed',String(d==='toMusnad'));$('toArabic').setAttribute('aria-pressed',String(d==='toArabic'));$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي/الصوتي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';updateKeyboard();}
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
 
 function updateKeyboard(){ $('musnadKeyboard').classList.toggle('visible',direction==='toArabic'); }
