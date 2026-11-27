@@ -26,7 +26,7 @@ textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1
 .language-info strong{display:block;color:var(--gold2);font-size:14px;margin-bottom:4px}
 .language-info p{margin:0;color:#c8c2b3;font-size:12px}
 .language-info .scope{display:block;color:#9fa695;font-size:11px;margin-top:7px}
-.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{appearance:none;width:100%;background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px;cursor:pointer;color:inherit}.letter:hover,.letter:focus-visible{border-color:var(--gold);background:#293329;outline:none}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.arabic-equivalent{font:14px 'IBM Plex Sans Arabic',sans-serif;color:var(--muted);direction:rtl}
+.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{appearance:none;width:100%;background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px;cursor:pointer;color:inherit}.letter:hover,.letter:focus-visible{border-color:var(--gold);background:#293329;outline:none}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.letter.selected{border-color:var(--gold);background:#3a382b;box-shadow:inset 0 0 0 1px #92764a}.letter{cursor:pointer}.letter .arabic-equivalent{font-size:12px}.letter-detail{display:none;margin-top:14px;padding:16px;border:1px solid #766344;background:#20271f;border-radius:12px;line-height:1.9}.letter-detail.visible{display:block}.letter-detail h3{margin:0 0 8px;color:var(--gold2);font:700 21px 'Amiri',serif}.letter-detail p{margin:5px 0;color:#d0cabb;font-size:13px}.letter-detail strong{color:#e0c58e}.arabic-equivalent{font:14px 'IBM Plex Sans Arabic',sans-serif;color:var(--muted);direction:rtl}
 
 .keyboard{display:none;margin-top:12px;padding:13px;background:#1a211c;border:1px solid var(--line);border-radius:12px}.keyboard.visible{display:block}.keyboard-title{font-size:12px;color:var(--muted);margin:0 0 10px}.key-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}.key{min-height:46px;border:1px solid #4a554a;border-radius:8px;background:#252f27;color:var(--gold2);font:27px 'Amiri',serif;cursor:pointer}.key:active{background:#55472f;border-color:var(--gold)}.key-tools{display:flex;gap:7px;margin-top:8px}.key-tools .btn{flex:1;padding:10px 6px}@media(max-width:380px){.key-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
@@ -55,7 +55,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
 <p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، ولا يصح مساواته بالجيم العربية تلقائياً. لذلك فالتحويل تقريبي وليس ترجمة. الحروف التي لا مقابل مباشراً لها، مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة، تبقى مكتوبة بالعربية حتى لا تُفقد عند التحويل العكسي. وفي الاتجاه العكسي تظهر جميع الحروف بمقابلات عربية مبسطة دون رموز صوتية داخل الكلمات. بعض الأصوات الجنوبية المتمايزة، مثل s¹ وs³، قد تظهر بالحرف العربي نفسه «س»، لذلك لا يمكن استعادة التمييز الصوتي الأصلي من المقابل العربي وحده. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
 </section>
-<section class="section"><h2>الأبجدية الجنوبية العربية — 29 حرفاً</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">يعرض الجدول الحروف بترتيبها الأبجدي المسندي، مع النقل الصوتي العلمي وشرح عربي تقريبي. اضغط على أي بطاقة لإضافة الرمز إلى مربع الكتابة.</p><div class="alphabet" id="alphabet"></div><p class="note">كيف تقرأ الرموز؟ الصيغ مثل s¹ وs² وs³ وḥ وḫ هي اصطلاحات للنقل الصوتي العلمي، وليست حروفاً إنجليزية داخل المسند. الشرح العربي بجانبها للتقريب فقط، ولا يعني تطابق الصوت القديم مع نطق الحرف العربي الحديث. خصوصاً الصفيريات الثلاث s¹ وs² وs³، فهي أصوات متمايزة لا تقابلها ثلاثة أحرف عربية حديثة مقابلة بدقة.</p></section>
+<section class="section"><h2>الأبجدية الجنوبية العربية — 29 حرفاً</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">يعرض الجدول الحروف بترتيبها الأبجدي المسندي، مع النقل الصوتي العلمي وشرح عربي تقريبي. اضغط على أي بطاقة لإضافة الرمز إلى مربع الكتابة.</p><div class="alphabet" id="alphabet"></div><div class="letter-detail" id="letterDetail" aria-live="polite"></div><p class="note">كيف تقرأ الرموز؟ الصيغ مثل s¹ وs² وs³ وḥ وḫ هي اصطلاحات للنقل الصوتي العلمي، وليست حروفاً إنجليزية داخل المسند. الشرح العربي بجانبها للتقريب فقط، ولا يعني تطابق الصوت القديم مع نطق الحرف العربي الحديث. خصوصاً الصفيريات الثلاث s¹ وs² وs³، فهي أصوات متمايزة لا تقابلها ثلاثة أحرف عربية حديثة مقابلة بدقة.</p></section>
 </main>
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
@@ -130,7 +130,44 @@ $('keyClear').onclick=()=>{$('source').value='';savedStart=savedEnd=0;$('result'
 
 updateKeyboard();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
-$('alphabet').innerHTML=letters.map(([g,n])=>'<button type="button" class="letter" data-glyph="'+g+'" aria-label="إضافة الحرف '+g+'"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></button>').join('');
-$('alphabet').addEventListener('click',e=>{const key=e.target.closest('[data-glyph]');if(!key)return;if(direction!=='toArabic')setDirection('toArabic');$('source').value+=key.dataset.glyph;convert();$('source').focus();});
+// ترتيب عرض تعليمي وفق التسلسل العربي التقريبي، مع إبقاء ترتيب لوحة المفاتيح مستقلاً.
+const alphabetLetters=[
+['𐩱','ʾ','همزة تقريباً','لا يعني ذلك أن الرمز يطابق جميع استعمالات الهمزة في العربية الحديثة.'],
+['𐩨','b','باء تقريباً','قيمة صامتة تقارب صوت الباء.'],
+['𐩩','t','تاء تقريباً','قيمة صامتة تقارب صوت التاء.'],
+['𐩻','ṯ','ثاء تقريباً','تقريب تعليمي؛ لا يُفترض التطابق التام مع نطق الثاء الحديث.'],
+['𐩴','g','لا مقابل عربي مطابق','يمثل صوتاً من نوع g؛ استُخدم «گ» للتقريب والتمييز عن الجيم.'],
+['𐩢','ḥ','حاء تقريباً','صوت حلقي مفخم/مهموس يقرّب بالحاء لأغراض الشرح.'],
+['𐩭','ḫ','خاء تقريباً','تقريب للصوت، وليس حكماً بتطابق النطق في كل لهجة قديمة.'],
+['𐩵','d','دال تقريباً','قيمة صامتة تقارب صوت الدال.'],
+['𐩹','ḏ','ذال تقريباً','تقريب تعليمي لصوت أسناني مجهور.'],
+['𐩧','r','راء تقريباً','قيمة صامتة تقارب صوت الراء.'],
+['𐩸','z','زاي تقريباً','قيمة صامتة تقارب صوت الزاي.'],
+['𐩪','s¹','صفيرية أولى','تميّزها الكتابة العلمية عن الصفيريتين s² وs³؛ لا يمكن استعادتها بدقة من «س» الحديثة وحدها.'],
+['𐩦','s²','صفيرية ثانية','صوت صفيري مستقل؛ كتابة «ش» بجانبه مجرد تقريب وليس مقابلاً مؤكداً.'],
+['𐩯','s³','صفيرية ثالثة','صوت صفيري ثالث مستقل، ولا يملك مقابلاً عربياً حديثاً منفرداً مؤكداً.'],
+['𐩮','ṣ','صاد تقريباً','تقريب لصوت مفخم/مطبق؛ لا يُفترض التطابق الكامل مع الصاد الحديثة.'],
+['𐩳','ḍ','ضاد تقريباً','تقريب تعليمي لقيمة الصوت القديمة.'],
+['𐩷','ṭ','طاء تقريباً','تقريب لصوت مفخم/مطبق.'],
+['𐩼','ẓ','ظاء تقريباً','تقريب تعليمي، وليس مساواة قطعية بالظاء الحديثة.'],
+['𐩲','ʿ','عين تقريباً','يمثل صوتاً حلقياً؛ يُنقل اصطلاحياً بالرمز ʿ.'],
+['𐩶','ġ','غين تقريباً','تقريب لصوت حلقي/لهوي مجهور.'],
+['𐩰','f','فاء تقريباً','قيمة صامتة تقارب صوت الفاء.'],
+['𐩤','q','قاف تقريباً','قيمة صامتة تقارب صوت القاف.'],
+['𐩫','k','كاف تقريباً','قيمة صامتة تقارب صوت الكاف.'],
+['𐩡','l','لام تقريباً','قيمة صامتة تقارب صوت اللام.'],
+['𐩣','m','ميم تقريباً','قيمة صامتة تقارب صوت الميم.'],
+['𐩬','n','نون تقريباً','قيمة صامتة تقارب صوت النون.'],
+['𐩠','h','هاء تقريباً','قيمة صامتة تقارب صوت الهاء.'],
+['𐩥','w','واو تقريباً','قيمة صامتة/شبه صائتة تقارب الواو.'],
+['𐩺','y','ياء تقريباً','قيمة صامتة/شبه صائتة تقارب الياء.']
+];
+function showLetterDetails(glyph,button){
+const item=alphabetLetters.find(x=>x[0]===glyph);if(!item)return;
+document.querySelectorAll('#alphabet .letter').forEach(el=>el.classList.toggle('selected',el===button));
+const box=$('letterDetail');box.innerHTML='<h3>الحرف '+item[0]+'</h3><p><strong>القيمة الصوتية العلمية:</strong> '+item[1]+'</p><p><strong>التقريب العربي:</strong> '+item[2]+'</p><p><strong>ملاحظة:</strong> '+item[3]+'</p>';box.classList.add('visible');
+}
+$('alphabet').innerHTML=alphabetLetters.map(([g,sound,arabic])=>'<button type="button" class="letter" data-glyph="'+g+'" aria-label="عرض معلومات الرمز '+g+'"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+sound+'</div><div class="arabic-equivalent">'+arabic+'</div></button>').join('');
+$('alphabet').addEventListener('click',e=>{const key=e.target.closest('[data-glyph]');if(key)showLetterDetails(key.dataset.glyph,key);});
 </script>
 </body></html>
