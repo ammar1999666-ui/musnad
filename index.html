@@ -34,30 +34,37 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <div class="tabs"><button class="tab active" id="toMusnad">العربية ← المسند</button><button class="tab" id="toArabic">المسند ← العربية</button></div>
 <div class="controls">
 <div class="field"><label for="language">اللغة الجنوبية العربية القديمة</label><select id="language"><option value="sab">السبئية</option><option value="min">المعينية</option><option value="qat">القتبانية</option><option value="had">الحضرمية</option></select></div>
-<div class="field"><label for="mode">نوع المعالجة</label><select id="mode"><option value="literal">نقل حرفي تقريبي</option></select></div>
+<div class="field"><label for="mode">طريقة التحويل</label><select id="mode"><option value="consonants">تقريب الصوامت (تجريبي)</option></select></div>
 </div>
 <label id="inputLabel" for="source" style="display:block;color:var(--muted);font-size:13px;margin:0 0 8px">اكتب النص العربي هنا</label>
 <textarea id="source" placeholder="اكتب أو الصق النص هنا..."></textarea>
 <div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div></div>
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
-<p class="note">تنبيه علمي: المسند نظام كتابة استُخدم لتدوين لغات جنوب الجزيرة العربية القديمة، وليس لغة واحدة. المقابلات العربية المعروضة تقريبية للتعرّف على الأصوات وليست تطابقاً تاماً. الرمز (*) بجانب ج يشير إلى صوت g القديم، كما أن س¹ وس² وس³ أصوات متميزة في المسند. هذه الأداة لا تقدم ترجمة لغوية موثقة.</p>
+<p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. هذا التحويل تجريبي لتقريب الصوامت، وليس ترجمة أو تهجئة تاريخية موثقة. الألف المدية تُحذف في هذا النمط، ولا يوجد تطابق عربي تام لبعض الأصوات؛ فـ𐩴 قيمته g، والسينات الثلاث 𐩪 و𐩦 و𐩯 أصوات متميزة. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.
 </section>
 <section class="section"><h2>أبجدية المسند</h2><div class="alphabet" id="alphabet"></div></section>
 </main>
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
 const letters=[
-['𐩱','ء'],['𐩨','ب'],['𐩩','ت'],['𐩻','ث'],['𐩴','ج*'],['𐩢','ح'],['𐩭','خ'],['𐩵','د'],['𐩹','ذ'],['𐩧','ر'],['𐩸','ز'],['𐩪','س¹'],['𐩦','ش (س²)'],['𐩯','س³'],['𐩮','ص'],['𐩳','ض'],['𐩷','ط'],['𐩼','ظ'],['𐩲','ع'],['𐩶','غ'],['𐩰','ف'],['𐩤','ق'],['𐩫','ك'],['𐩡','ل'],['𐩣','م'],['𐩬','ن'],['𐩠','هـ'],['𐩥','و'],['𐩺','ي']
+['𐩱','ء'],['𐩨','ب'],['𐩩','ت'],['𐩻','ث'],['𐩴','گ (g)'],['𐩢','ح'],['𐩭','خ'],['𐩵','د'],['𐩹','ذ'],['𐩧','ر'],['𐩸','ز'],['𐩪','س¹'],['𐩦','ش (تقريباً)'],['𐩯','س³'],['𐩮','ص'],['𐩳','ض'],['𐩷','ط'],['𐩼','ظ'],['𐩲','ع'],['𐩶','غ'],['𐩰','ف'],['𐩤','ق'],['𐩫','ك'],['𐩡','ل'],['𐩣','م'],['𐩬','ن'],['𐩠','هـ'],['𐩥','و'],['𐩺','ي']
 ];
-const arTo=[['ا','𐩱'],['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ء','𐩱'],['ب','𐩨'],['ت','𐩩'],['ث','𐩻'],['ج','𐩴'],['ح','𐩢'],['خ','𐩭'],['د','𐩵'],['ذ','𐩹'],['ر','𐩧'],['ز','𐩸'],['س','𐩪'],['ش','𐩦'],['ص','𐩮'],['ض','𐩳'],['ط','𐩷'],['ظ','𐩼'],['ع','𐩲'],['غ','𐩶'],['ف','𐩰'],['ق','𐩤'],['ك','𐩫'],['ل','𐩡'],['م','𐩣'],['ن','𐩬'],['ه','𐩠'],['ة','𐩠'],['و','𐩥'],['ؤ','𐩥'],['ي','𐩺'],['ى','𐩺'],['ئ','𐩺']];
+// تقريب تجريبي للصوامت؛ لا يمثل تهجئة تاريخية موثقة للكلمات.
+const arTo=[['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ء','𐩱'],['ب','𐩨'],['ت','𐩩'],['ث','𐩻'],['گ','𐩴'],['ح','𐩢'],['خ','𐩭'],['د','𐩵'],['ذ','𐩹'],['ر','𐩧'],['ز','𐩸'],['س','𐩪'],['ش','𐩦'],['ص','𐩮'],['ض','𐩳'],['ط','𐩷'],['ظ','𐩼'],['ع','𐩲'],['غ','𐩶'],['ف','𐩰'],['ق','𐩤'],['ك','𐩫'],['ل','𐩡'],['م','𐩣'],['ن','𐩬'],['ه','𐩠'],['ة','𐩠'],['و','𐩥'],['ي','𐩺'],['ى','𐩺']];
 const musTo=new Map(arTo.map(([a,m])=>[m,a]));
+musTo.set('𐩱','ء');
+musTo.set('𐩴','گ');
+musTo.set('𐩦','ش');
 musTo.set('𐩯','س³');
 let direction='toMusnad';
 const $=id=>document.getElementById(id);
 function convert(){const s=$('source').value; if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
-let out=''; for(const ch of s){if(direction==='toMusnad'){const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;}else{out+=musTo.get(ch)||ch;}} $('result').textContent=out;}
+let out=''; for(const ch of s){if(direction==='toMusnad'){
+if(ch==='ا'){continue;} // الألف المدية لا تقابلها هنا علامة صامتة مستقلة.
+const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
+}else{out+=musTo.get(ch)||ch;}} $('result').textContent=out;}
 function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'النص بالعربية';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
-$('alphabet').innerHTML=letters.map(([g,n])=>'<div class="letter"><div class="glyph">'+g+'</div><div class="latin">'+n+'</div></div>').join('');
+$('alphabet').innerHTML=letters.map(([g,n])=>'<div class="letter"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></div>').join('');
 </script>
 </body></html>
