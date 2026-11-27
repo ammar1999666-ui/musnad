@@ -7,9 +7,13 @@
 <title>مُسند | MUSNAD</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
-:root{--bg:#171b18;--panel:#202722;--panel2:#252e28;--gold:#c6a66a;--gold2:#e0c58e;--ink:#f1eadb;--muted:#aaa99c;--line:#3c453d;--green:#7d9279}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#394334 0%,var(--bg) 55%);color:var(--ink);font-family:'IBM Plex Sans Arabic',sans-serif;min-height:100vh}
-header{max-width:1050px;margin:auto;padding:34px 22px 20px;text-align:center}
+:root{color-scheme:dark;--bg:#171b18;--panel:#202722;--panel2:#252e28;--gold:#c6a66a;--gold2:#e0c58e;--ink:#f1eadb;--muted:#aaa99c;--line:#3c453d;--green:#7d9279}
+body[data-theme="light"]{color-scheme:light;--bg:#f3efe6;--panel:#fffdf8;--panel2:#eee7da;--gold:#987044;--gold2:#805b32;--ink:#302b24;--muted:#756c60;--line:#ded4c3;--green:#71836d;background:radial-gradient(ellipse at 50% -20%,#e8decb 0%,var(--bg) 58%);color:var(--ink)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#394334 0%,var(--bg) 55%);color:var(--ink);font-family:'IBM Plex Sans Arabic',sans-serif;min-height:100vh;transition:background .25s,color .25s}button,textarea,select{font-family:inherit}
+header{max-width:1050px;margin:auto;padding:34px 22px 20px;text-align:center;position:relative}
+.theme-toggle{position:absolute;top:24px;right:22px;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:rgba(32,39,34,.72);color:var(--ink);padding:8px 12px;border-radius:999px;font:500 12px 'IBM Plex Sans Arabic',sans-serif;cursor:pointer;transition:background .2s,border-color .2s,transform .2s}
+.theme-toggle:hover{border-color:var(--gold);transform:translateY(-1px)}
+.theme-toggle:focus-visible,.btn:focus-visible,.tab:focus-visible,.key:focus-visible,.letter:focus-visible,.detail-close:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
 .mark{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border:1px solid #8d754c;border-radius:50%;color:var(--gold2);font-size:30px;margin-bottom:12px}
 h1{font-family:'Amiri',serif;font-size:clamp(38px,7vw,58px);margin:0;color:var(--gold2);font-weight:700;letter-spacing:.5px}
 .en{font:600 12px sans-serif;letter-spacing:5px;color:#b4aa92;margin-top:0}
@@ -30,11 +34,42 @@ textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1
 
 .keyboard{display:none;margin-top:12px;padding:13px;background:#1a211c;border:1px solid var(--line);border-radius:12px}.keyboard.visible{display:block}.keyboard-title{font-size:12px;color:var(--muted);margin:0 0 10px}.key-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}.key{min-height:46px;border:1px solid #4a554a;border-radius:8px;background:#252f27;color:var(--gold2);font:27px 'Amiri',serif;cursor:pointer}.key:active{background:#55472f;border-color:var(--gold)}.key-tools{display:flex;gap:7px;margin-top:8px}.key-tools .btn{flex:1;padding:10px 6px}@media(max-width:380px){.key-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
-@media(max-width:560px){.panel{padding:15px}.controls{grid-template-columns:1fr}.tabs{flex-direction:column}.output{font-size:25px}}
+@media(max-width:560px){header{padding-top:76px}.theme-toggle{top:14px;right:18px}.panel{padding:15px}.controls{grid-template-columns:1fr}.tabs{flex-direction:column}.output{font-size:25px}.alphabet{grid-template-columns:repeat(auto-fit,minmax(58px,1fr))}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+/* تحسينات هادئة للوضع الفاتح مع الحفاظ على بنية الواجهة الأصلية */
+body[data-theme="light"] .theme-toggle{background:#fffaf1;border-color:#d8c9b2;color:#57452f}
+body[data-theme="light"] .panel{background:linear-gradient(145deg,#fffdf9,#f6f0e5);border-color:#ded4c3;box-shadow:0 14px 38px #76664a18}
+body[data-theme="light"] .tab{background:#f0e9dc;border-color:#ded4c3;color:#756c60}
+body[data-theme="light"] .tab.active{background:#e6d5b8;border-color:#b18a55;color:#493722}
+body[data-theme="light"] .field select,body[data-theme="light"] textarea{background:#fffdf8;border-color:#ded4c3;color:#302b24}
+body[data-theme="light"] .output{background:#f7f1e7;border-color:#cbb894;color:#76542f}
+body[data-theme="light"] .conversion-hint,body[data-theme="light"] .note{background:#eee6d8;border-color:#c7ae86;color:#66563f}
+body[data-theme="light"] .language-info{background:#f1eadf;border-color:#d8cbb7}
+body[data-theme="light"] .language-info p{color:#62594d}
+body[data-theme="light"] .language-info .scope{color:#827663}
+body[data-theme="light"] .letter{background:#fffaf2;border-color:#ded4c3;color:#302b24}
+body[data-theme="light"] .letter:hover,body[data-theme="light"] .letter:focus-visible{background:#f0e5d2}
+body[data-theme="light"] .letter.selected{background:#ead9bb;border-color:#a9804b}
+body[data-theme="light"] .letter .arabic-main{color:#805b32}
+body[data-theme="light"] .letter .latin-value{color:#796e5f}
+body[data-theme="light"] .alphabet-instruction{background:#f0e6d5;border-color:#c9b18b;color:#51432f}
+body[data-theme="light"] .alphabet-instruction strong{color:#805b32}
+body[data-theme="light"] .letter-modal{background:#342c20a8}
+body[data-theme="light"] .letter-detail{background:linear-gradient(145deg,#fffdf8,#eee5d5);border-color:#b99a6b;box-shadow:0 22px 70px #30251645}
+body[data-theme="light"] .letter-detail p{color:#51483d}
+body[data-theme="light"] .letter-detail strong,body[data-theme="light"] .letter-detail h3,body[data-theme="light"] .letter-detail .detail-glyph{color:#805b32}
+body[data-theme="light"] .detail-close{background:#f4ecdf;border-color:#cdb894;color:#57452f}
+body[data-theme="light"] .keyboard{background:#f1eadf;border-color:#ded4c3}
+body[data-theme="light"] .key{background:#fffaf2;border-color:#d6c8b2;color:#805b32}
+body[data-theme="light"] .key:active{background:#ead9bb}
+body[data-theme="light"] .btn{background:#eee7da;border-color:#d8cbb7;color:#4b4032}
+body[data-theme="light"] .btn.primary{background:#b58b54;border-color:#a47a43;color:#fffaf2}
+body[data-theme="light"] footer{color:#82796d}
+.panel,.letter,.tab,.btn,.field select,textarea,.output,.note,.language-info,.alphabet-instruction,.keyboard{transition:background-color .2s,border-color .2s,color .2s,box-shadow .2s}
 </style>
 </head>
 <body>
-<header><div class="mark">𐩠</div><h1>مُسند</h1><div class="en">M U S N A D</div><p class="tag">منقوش في التاريخ، حيّ بالتقنية</p></header>
+<header><button type="button" class="theme-toggle" id="themeToggle" aria-label="تفعيل الوضع الفاتح" aria-pressed="false"><span id="themeIcon" aria-hidden="true">☼</span><span id="themeLabel">الوضع الفاتح</span></button><div class="mark">𐩠</div><h1>مُسند</h1><div class="en">M U S N A D</div><p class="tag">منقوش في التاريخ، حيّ بالتقنية</p></header>
 <main>
 <section class="panel">
 <div class="tabs"><button class="tab active" id="toMusnad">من العربية إلى المسند</button><button class="tab" id="toArabic">من المسند إلى العربية</button></div>
@@ -146,6 +181,12 @@ $('keyDelete').onclick=()=>{const field=$('source');let start=Math.min(savedStar
 $('keyClear').onclick=()=>{$('source').value='';savedStart=savedEnd=0;$('result').textContent='ستظهر النتيجة هنا';};
 
 updateKeyboard();
+// تبديل المظهر مع حفظ اختيار الزائر محلياً؛ الوضع الداكن يبقى الافتراضي.
+const themeToggle=$('themeToggle');
+function applyTheme(theme){const light=theme==='light';document.body.dataset.theme=light?'light':'dark';themeToggle.setAttribute('aria-pressed',String(light));themeToggle.setAttribute('aria-label',light?'تفعيل الوضع الداكن':'تفعيل الوضع الفاتح');$('themeIcon').textContent=light?'☾':'☼';$('themeLabel').textContent=light?'الوضع الداكن':'الوضع الفاتح';document.querySelector('meta[name="theme-color"]').setAttribute('content',light?'#f3efe6':'#171b18');}
+let preferredTheme='dark';try{preferredTheme=localStorage.getItem('musnad-theme')==='light'?'light':'dark';}catch(e){}
+applyTheme(preferredTheme);
+themeToggle.addEventListener('click',()=>{const next=document.body.dataset.theme==='light'?'dark':'light';applyTheme(next);try{localStorage.setItem('musnad-theme',next);}catch(e){}});
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>{const current=$('source').value;const nextResult=$('result').textContent;const nextDirection=direction==='toMusnad'?'toArabic':'toMusnad';setDirection(nextDirection);if(current.trim()&&nextResult!=='ستظهر النتيجة هنا'){$('source').value=nextResult;savedStart=savedEnd=$('source').value.length;convert();}};$('clear').onclick=()=>{$('source').value='';savedStart=savedEnd=0;$('result').textContent='ستظهر النتيجة هنا';$('conversionHint').hidden=true;};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
 // ترتيب الأبجدية الجنوبية العربية المتعارف عليه (h-l-ḥ-m...), مع إبقاء ترتيب لوحة المفاتيح مستقلاً.
 const alphabetLetters=[
