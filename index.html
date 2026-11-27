@@ -71,6 +71,7 @@ const letters=[
 // مقابلات تقريبية: الحروف غير المتطابقة صوتياً تُترك كما هي بدلاً من اختراع مقابل لها.
 const arTo=[['ء','𐩱'],['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ٱ','𐩱'],['ؤ','𐩱'],['ئ','𐩱'],['ا','𐩱'],['ى','𐩺'],['ة','𐩩'],['ب','𐩨'],['ت','𐩩'],['ج','𐩴'], ['ث','𐩻'],['ح','𐩢'],['خ','𐩭'],['د','𐩵'],['ذ','𐩹'],['ر','𐩧'],['ز','𐩸'],['س','𐩪'],['ش','𐩦'],['ص','𐩮'],['ض','𐩳'],['ط','𐩷'],['ظ','𐩼'],['ع','𐩲'],['غ','𐩶'],['ف','𐩰'],['ق','𐩤'],['ك','𐩫'],['ل','𐩡'],['م','𐩣'],['ن','𐩬'],['ه','𐩠'],['و','𐩥'],['ي','𐩺'],['گ','𐩴']];
 // التحويل العكسي مطابق لترتيب رموز Unicode وقيمها الصوتية الأكاديمية.
+const supportedArabic=new Set(arTo.map(([ch])=>ch));
 const musTo=new Map([
 ['𐩠','ه'],['𐩡','ل'],['𐩢','ح'],['𐩣','م'],['𐩤','ق'],
 ['𐩥','و'],['𐩦','ش²'],['𐩧','ر'],['𐩨','ب'],['𐩩','ت'],
@@ -104,6 +105,8 @@ const approximated=[...new Set([...s].filter(ch=>'اأإآٱىةؤئ'.includes(c
 if(approximated.length)notices.push('استُخدمت تقريبات كتابية لهذه الحروف: '+approximated.join('، ')+'. الألف وأشكال الهمزة ← 𐩱، والألف المقصورة ← 𐩺، والتاء المربوطة ← 𐩩. هذه مقابلات عملية وليست قواعد إملائية تاريخية مؤكدة، وقد لا تحفظ النطق أو أصل الكلمة.');
 if(s.includes('ج'))notices.push('تنبيه: حُوّلت «ج» إلى 𐩴 ذي القيمة الصوتية g باعتباره أقرب خيار عملي في هذه الأداة، لكنه تقريب وليس تطابقاً مؤكداً مع نطق الجيم في العربية.');
 if(s.includes('س')||s.includes('ش'))notices.push('تنبيه صوتي: حُوّلت «س» إلى s¹ و«ش» إلى s² كتقريب كتابي فقط. لا يمكن استنتاج أيٍّ من الصفيريات الجنوبية الثلاث s¹ وs² وs³ بدقة من الحروف العربية الحديثة وحدها.');
+const unsupportedArabic=[...new Set([...s].filter(ch=>/\\p{Script=Arabic}/u.test(ch)&&/\\p{L}/u.test(ch)&&!supportedArabic.has(ch)))];
+if(unsupportedArabic.length)notices.push('بقيت هذه الحروف كما هي لعدم وجود مقابل لها في جدول التحويل الحالي: '+unsupportedArabic.join('، ')+'.');
 if(notices.length){hint.textContent='ملاحظات التحويل: '+notices.join(' ');hint.hidden=false;}
 }else{
 const notices=[];
@@ -112,6 +115,8 @@ if(s.includes('𐩱'))notices.push('الرمز 𐩱 يُقرأ هنا «ء»، �
 if(s.includes('𐩩'))notices.push('الرمز 𐩩 يظهر «ت»، لكنه قد يكون ناتجاً عن التاء أو التاء المربوطة؛ لا يمكن استعادة هذا الفرق بعد التحويل.');
 if(s.includes('𐩺'))notices.push('الرمز 𐩺 يظهر «ي»، لكنه قد يكون ناتجاً عن الياء أو الألف المقصورة «ى»؛ لا يمكن استعادة الحرف الأصلي يقيناً.');
 if(s.includes('𐩴'))notices.push('الرمز 𐩴 يظهر بالحرف «گ» لتمييز قيمته g عن الجيم العربية.');
+const unsupportedMusnad=[...new Set([...s].filter(ch=>{const cp=ch.codePointAt(0);return cp>=0x10A60&&cp<=0x10A7F&&!musTo.has(ch)}))];
+if(unsupportedMusnad.length)notices.push('بقيت هذه الرموز كما هي لأن جدول القراءة الحالي لا يتضمن مقابلاً لها: '+unsupportedMusnad.join('، ')+'.');
 if(notices.length){hint.textContent='ملاحظة على القراءة: '+notices.join(' ');hint.hidden=false;}
 }}
 function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('toMusnad').setAttribute('aria-pressed',String(d==='toMusnad'));$('toArabic').setAttribute('aria-pressed',String(d==='toArabic'));$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي/الصوتي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';updateKeyboard();}
