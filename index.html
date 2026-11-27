@@ -100,13 +100,13 @@ function updateKeyboard(){ $('musnadKeyboard').classList.toggle('visible',direct
 function insertAtCursor(value){
  const field=$('source');const start=field.selectionStart??field.value.length;const end=field.selectionEnd??field.value.length;
  field.value=field.value.slice(0,start)+value+field.value.slice(end);
- const pos=start+value.length;field.focus();field.setSelectionRange(pos,pos);convert();
+ const pos=start+value.length;field.setSelectionRange(pos,pos);convert();
 }
 $('keyGrid').innerHTML=letters.map(([g])=>'<button type="button" class="key" data-key="'+g+'" aria-label="الحرف '+g+'">'+g+'</button>').join('');
 $('keyGrid').addEventListener('click',e=>{const key=e.target.closest('[data-key]');if(key)insertAtCursor(key.dataset.key);});
 $('keySpace').onclick=()=>insertAtCursor(' ');
-$('keyDelete').onclick=()=>{const field=$('source');let start=field.selectionStart??field.value.length,end=field.selectionEnd??field.value.length;if(start===end&&start>0)start--;field.value=field.value.slice(0,start)+field.value.slice(end);field.focus();field.setSelectionRange(start,start);convert();};
-$('keyClear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';$('source').focus();};
+$('keyDelete').onclick=()=>{const field=$('source');let start=field.selectionStart??field.value.length,end=field.selectionEnd??field.value.length;if(start===end&&start>0)start--;field.value=field.value.slice(0,start)+field.value.slice(end);field.setSelectionRange(start,start);convert();};
+$('keyClear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};
 
 updateKeyboard();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
