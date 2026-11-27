@@ -26,7 +26,7 @@ textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1
 .language-info strong{display:block;color:var(--gold2);font-size:14px;margin-bottom:4px}
 .language-info p{margin:0;color:#c8c2b3;font-size:12px}
 .language-info .scope{display:block;color:#9fa695;font-size:11px;margin-top:7px}
-.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.arabic-equivalent{font:14px 'IBM Plex Sans Arabic',sans-serif;color:var(--muted);direction:rtl}
+.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{appearance:none;width:100%;background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px;cursor:pointer;color:inherit}.letter:hover,.letter:focus-visible{border-color:var(--gold);background:#293329;outline:none}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.arabic-equivalent{font:14px 'IBM Plex Sans Arabic',sans-serif;color:var(--muted);direction:rtl}
 footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 @media(max-width:560px){.panel{padding:15px}.controls{grid-template-columns:1fr}.tabs{flex-direction:column}.output{font-size:25px}}
 </style>
@@ -51,7 +51,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
 <p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، ولا يصح مساواته بالجيم العربية تلقائياً. لذلك فالتحويل تقريبي وليس ترجمة. الحروف التي لا مقابل مباشراً لها، مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة، تبقى مكتوبة بالعربية حتى لا تُفقد عند التحويل العكسي. وفي الاتجاه العكسي تظهر جميع الحروف بمقابلات عربية مبسطة دون رموز صوتية داخل الكلمات. بعض الأصوات الجنوبية المتمايزة، مثل s¹ وs³، قد تظهر بالحرف العربي نفسه «س»، لذلك لا يمكن استعادة التمييز الصوتي الأصلي من المقابل العربي وحده. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
 </section>
-<section class="section"><h2>أبجدية المسند</h2><div class="alphabet" id="alphabet"></div></section>
+<section class="section"><h2>أبجدية المسند</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">اضغط على أي حرف لإضافته إلى مربع الكتابة وبناء نص بالمسند.</p><div class="alphabet" id="alphabet"></div></section>
 </main>
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
@@ -91,6 +91,7 @@ const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
 function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
-$('alphabet').innerHTML=letters.map(([g,n])=>'<div class="letter"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></div>').join('');
+$('alphabet').innerHTML=letters.map(([g,n])=>'<button type="button" class="letter" data-glyph="'+g+'" aria-label="إضافة الحرف '+g+'"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></button>').join('');
+$('alphabet').addEventListener('click',e=>{const key=e.target.closest('[data-glyph]');if(!key)return;if(direction!=='toArabic')setDirection('toArabic');$('source').value+=[key.dataset.glyph];convert();$('source').focus();});
 </script>
 </body></html>
