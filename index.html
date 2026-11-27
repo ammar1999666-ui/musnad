@@ -27,6 +27,8 @@ textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1
 .language-info p{margin:0;color:#c8c2b3;font-size:12px}
 .language-info .scope{display:block;color:#9fa695;font-size:11px;margin-top:7px}
 .section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{appearance:none;width:100%;background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px;cursor:pointer;color:inherit}.letter:hover,.letter:focus-visible{border-color:var(--gold);background:#293329;outline:none}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.arabic-equivalent{font:14px 'IBM Plex Sans Arabic',sans-serif;color:var(--muted);direction:rtl}
+
+.keyboard{display:none;margin-top:12px;padding:13px;background:#1a211c;border:1px solid var(--line);border-radius:12px}.keyboard.visible{display:block}.keyboard-title{font-size:12px;color:var(--muted);margin:0 0 10px}.key-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px}.key{min-height:46px;border:1px solid #4a554a;border-radius:8px;background:#252f27;color:var(--gold2);font:27px 'Amiri',serif;cursor:pointer}.key:active{background:#55472f;border-color:var(--gold)}.key-tools{display:flex;gap:7px;margin-top:8px}.key-tools .btn{flex:1;padding:10px 6px}@media(max-width:380px){.key-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 @media(max-width:560px){.panel{padding:15px}.controls{grid-template-columns:1fr}.tabs{flex-direction:column}.output{font-size:25px}}
 </style>
@@ -47,6 +49,8 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 </div>
 <label id="inputLabel" for="source" style="display:block;color:var(--muted);font-size:13px;margin:0 0 8px">اكتب النص العربي هنا</label>
 <textarea id="source" placeholder="اكتب أو الصق النص هنا..."></textarea>
+<div class="keyboard" id="musnadKeyboard" aria-label="لوحة مفاتيح المسند"><p class="keyboard-title">لوحة حروف المسند — اضغط على الحروف لإضافتها إلى النص</p><div class="key-grid" id="keyGrid"></div><div class="key-tools"><button type="button" class="btn" id="keySpace">مسافة</button><button type="button" class="btn" id="keyDelete">⌫ حذف</button><button type="button" class="btn" id="keyClear">مسح الكل</button></div></div>
+
 <div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div></div>
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
 <p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، ولا يصح مساواته بالجيم العربية تلقائياً. لذلك فالتحويل تقريبي وليس ترجمة. الحروف التي لا مقابل مباشراً لها، مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة، تبقى مكتوبة بالعربية حتى لا تُفقد عند التحويل العكسي. وفي الاتجاه العكسي تظهر جميع الحروف بمقابلات عربية مبسطة دون رموز صوتية داخل الكلمات. بعض الأصوات الجنوبية المتمايزة، مثل s¹ وs³، قد تظهر بالحرف العربي نفسه «س»، لذلك لا يمكن استعادة التمييز الصوتي الأصلي من المقابل العربي وحده. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
@@ -91,6 +95,20 @@ const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
 }else{out+=musTo.has(ch)?musTo.get(ch):ch;}} $('result').textContent=out;}
 function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('toMusnad').setAttribute('aria-pressed',String(d==='toMusnad'));$('toArabic').setAttribute('aria-pressed',String(d==='toArabic'));$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
+
+function updateKeyboard(){ $('musnadKeyboard').classList.toggle('visible',direction==='toArabic'); }
+function insertAtCursor(value){
+ const field=$('source');const start=field.selectionStart??field.value.length;const end=field.selectionEnd??field.value.length;
+ field.value=field.value.slice(0,start)+value+field.value.slice(end);
+ const pos=start+value.length;field.focus();field.setSelectionRange(pos,pos);convert();
+}
+$('keyGrid').innerHTML=letters.map(([g])=>'<button type="button" class="key" data-key="'+g+'" aria-label="الحرف '+g+'">'+g+'</button>').join('');
+$('keyGrid').addEventListener('click',e=>{const key=e.target.closest('[data-key]');if(key)insertAtCursor(key.dataset.key);});
+$('keySpace').onclick=()=>insertAtCursor(' ');
+$('keyDelete').onclick=()=>{const field=$('source');let start=field.selectionStart??field.value.length,end=field.selectionEnd??field.value.length;if(start===end&&start>0)start--;field.value=field.value.slice(0,start)+field.value.slice(end);field.focus();field.setSelectionRange(start,start);convert();};
+$('keyClear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';$('source').focus();};
+
+updateKeyboard();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
 $('alphabet').innerHTML=letters.map(([g,n])=>'<button type="button" class="letter" data-glyph="'+g+'" aria-label="إضافة الحرف '+g+'"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></button>').join('');
 $('alphabet').addEventListener('click',e=>{const key=e.target.closest('[data-glyph]');if(!key)return;if(direction!=='toArabic')setDirection('toArabic');$('source').value+=key.dataset.glyph;convert();$('source').focus();});
