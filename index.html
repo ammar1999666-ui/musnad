@@ -60,7 +60,7 @@ let direction='toMusnad';
 const $=id=>document.getElementById(id);
 function convert(){const s=$('source').value; if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
 let out=''; for(const ch of s){if(direction==='toMusnad'){
-if(ch==='ا'){continue;} // الألف المدية لا تقابلها هنا علامة صامتة مستقلة.
+if(ch==='ا'||ch==='ة'){continue;} // تُحذف الألف المدية والتاء المربوطة في هذا التقريب الصامتي.
 const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
 }else{out+=musTo.get(ch)||ch;}} $('result').textContent=out;}
 function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'النص بالعربية';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
