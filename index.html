@@ -40,30 +40,34 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <textarea id="source" placeholder="اكتب أو الصق النص هنا..."></textarea>
 <div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div></div>
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
-<p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. هذا التحويل تجريبي لتقريب الصوامت، وليس ترجمة أو تهجئة تاريخية موثقة. الألف المدية والتاء المربوطة تُحذفان في هذا النمط عند التعامل معهما كحركتين، ولا يوجد تطابق عربي تام لبعض الأصوات؛ فـ𐩴 قيمته g، والسينات الثلاث 𐩪 و𐩦 و𐩯 أصوات متميزة. الحروف التي لا نملك لها مقابلاً واضحاً تبقى كما هي. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.
+<p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. في الاتجاه العكسي، تظهر 𐩦 على صورة س²، و𐩪 على صورة س¹، و𐩯 على صورة س³، و𐩴 على صورة گ (g). لذلك لا تستعيد النتيجة العربية الأصلية بالضرورة، بل تعرض مقابلاً تقريبياً لكل رمز. الألف المدية والتاء المربوطة تُحذفان في التحويل من العربية إلى المسند. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.
 </section>
 <section class="section"><h2>أبجدية المسند</h2><div class="alphabet" id="alphabet"></div></section>
 </main>
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
 const letters=[
-['𐩱','ء'],['𐩨','ب'],['𐩩','ت'],['𐩻','ث'],['𐩴','گ (g)'],['𐩢','ح'],['𐩭','خ'],['𐩵','د'],['𐩹','ذ'],['𐩧','ر'],['𐩸','ز'],['𐩪','س¹'],['𐩦','ش (تقريباً)'],['𐩯','س³'],['𐩮','ص'],['𐩳','ض'],['𐩷','ط'],['𐩼','ظ'],['𐩲','ع'],['𐩶','غ'],['𐩰','ف'],['𐩤','ق'],['𐩫','ك'],['𐩡','ل'],['𐩣','م'],['𐩬','ن'],['𐩠','هـ'],['𐩥','و'],['𐩺','ي']
+['𐩱','ء'],['𐩨','ب'],['𐩩','ت'],['𐩻','ث'],['𐩴','گ (g)'],['𐩢','ح'],['𐩭','خ'],['𐩵','د'],['𐩹','ذ'],['𐩧','ر'],['𐩸','ز'],['𐩪','س¹'],['𐩦','س²'],['𐩯','س³'],['𐩮','ص'],['𐩳','ض'],['𐩷','ط'],['𐩼','ظ'],['𐩲','ع'],['𐩶','غ'],['𐩰','ف'],['𐩤','ق'],['𐩫','ك'],['𐩡','ل'],['𐩣','م'],['𐩬','ن'],['𐩠','هـ'],['𐩥','و'],['𐩺','ي']
 ];
 // تقريب تجريبي للصوامت؛ لا يمثل تهجئة تاريخية موثقة للكلمات.
 const arTo=[['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ء','𐩱'],['ؤ','𐩱'],['ئ','𐩱'],['ب','𐩨'],['ت','𐩩'],['ث','𐩻'],['گ','𐩴'],['ح','𐩢'],['خ','𐩭'],['د','𐩵'],['ذ','𐩹'],['ر','𐩧'],['ز','𐩸'],['س','𐩪'],['ش','𐩦'],['ص','𐩮'],['ض','𐩳'],['ط','𐩷'],['ظ','𐩼'],['ع','𐩲'],['غ','𐩶'],['ف','𐩰'],['ق','𐩤'],['ك','𐩫'],['ل','𐩡'],['م','𐩣'],['ن','𐩬'],['ه','𐩠'],['و','𐩥'],['ي','𐩺'],['ى','𐩺']];
-const musTo=new Map(arTo.map(([a,m])=>[m,a]));
-musTo.set('𐩱','ء');
-musTo.set('𐩴','گ');
-musTo.set('𐩦','ش');
-musTo.set('𐩯','س³');
+// جدول عكسي صريح حتى لا تختلط الحروف المتقاربة أو تتأثر بترتيب جدول العربية.
+const musTo=new Map([
+['𐩠','هـ'],['𐩡','ل'],['𐩢','ح'],['𐩣','م'],['𐩤','ق'],
+['𐩥','و'],['𐩦','س²'],['𐩧','ر'],['𐩨','ب'],['𐩩','ت'],
+['𐩪','س¹'],['𐩫','ك'],['𐩬','ن'],['𐩭','خ'],['𐩮','ص'],
+['𐩯','س³'],['𐩰','ف'],['𐩱','ء'],['𐩲','ع'],['𐩳','ض'],
+['𐩴','گ'],['𐩵','د'],['𐩶','غ'],['𐩷','ط'],['𐩸','ز'],
+['𐩹','ذ'],['𐩺','ي'],['𐩻','ث'],['𐩼','ظ']
+]);
 let direction='toMusnad';
 const $=id=>document.getElementById(id);
 function convert(){const s=$('source').value; if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
 let out=''; for(const ch of s){if(direction==='toMusnad'){
 if(ch==='ا'||ch==='ة'){continue;} // تُحذف الألف المدية والتاء المربوطة في هذا التقريب الصامتي.
 const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
-}else{out+=musTo.get(ch)||ch;}} $('result').textContent=out;}
-function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'النص بالعربية';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
+}else{out+=musTo.has(ch)?musTo.get(ch):ch;}} $('result').textContent=out;}
+function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';}
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
 $('alphabet').innerHTML=letters.map(([g,n])=>'<div class="letter"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></div>').join('');
 </script>
