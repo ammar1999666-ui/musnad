@@ -19,7 +19,7 @@ main{max-width:900px;margin:22px auto 60px;padding:0 18px}
 .tabs{display:flex;gap:8px;margin-bottom:18px}.tab{flex:1;border:1px solid var(--line);background:#1a211c;color:var(--muted);padding:12px;border-radius:11px;font:600 14px inherit;cursor:pointer}.tab.active{background:#55472f;border-color:#92764a;color:#fff0cf}
 .controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}.field label{display:block;color:var(--muted);font-size:12px;margin:0 0 7px}.field select{width:100%;background:#171e19;border:1px solid var(--line);border-radius:10px;padding:12px;color:var(--ink);font:inherit;outline:none}
 textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1px solid var(--line);border-radius:12px;padding:16px;color:var(--ink);font:18px/1.9 'IBM Plex Sans Arabic',sans-serif;outline:none}textarea:focus,.field select:focus{border-color:var(--gold)}
-.output-wrap{margin-top:15px}.out-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--muted);font-size:13px}.output{min-height:145px;padding:18px;border:1px solid #66583d;background:#171d18;border-radius:12px;color:var(--gold2);font:30px/1.8 'Amiri',serif;overflow-wrap:anywhere;white-space:pre-wrap}
+.output-wrap{margin-top:15px}.out-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--muted);font-size:13px}.output{min-height:145px;padding:18px;border:1px solid #66583d;background:#171d18;border-radius:12px;color:var(--gold2);font:30px/1.8 'Amiri',serif;overflow-wrap:anywhere;white-space:pre-wrap}.conversion-hint{margin-top:9px;padding:10px 12px;border:1px solid #66583d;border-radius:9px;background:#272a21;color:#d5c9aa;font-size:12px;line-height:1.8}.conversion-hint[hidden]{display:none}
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid var(--line);background:#29332b;color:var(--ink);padding:10px 17px;border-radius:10px;font:600 13px inherit;cursor:pointer}.btn.primary{background:var(--gold);color:#201d16;border-color:var(--gold)}.btn:hover{filter:brightness(1.12)}
 .note{margin:16px 0 0;padding:12px 14px;border-right:3px solid var(--gold);background:#272a21;border-radius:7px;color:#c8c2b3;font-size:12px;line-height:1.8}
 .language-info{margin:0 0 16px;padding:13px 15px;background:#1b241e;border:1px solid #465044;border-radius:11px;line-height:1.85}
@@ -51,11 +51,12 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <textarea id="source" placeholder="اكتب أو الصق النص هنا..."></textarea>
 <div class="keyboard" id="musnadKeyboard" aria-label="لوحة مفاتيح المسند"><p class="keyboard-title">لوحة حروف المسند — اضغط على الحروف لإضافتها إلى النص</p><div class="key-grid" id="keyGrid"></div><div class="key-tools"><button type="button" class="btn" id="keySpace">مسافة</button><button type="button" class="btn" id="keyDelete">⌫ حذف</button><button type="button" class="btn" id="keyClear">مسح الكل</button></div></div>
 
-<div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div></div>
+<div class="output-wrap"><div class="out-head"><span id="outputLabel">النص بحروف المسند</span><span>النتيجة</span></div><div class="output" id="result" aria-live="polite">ستظهر النتيجة هنا</div><div class="conversion-hint" id="conversionHint" aria-live="polite" hidden></div></div>
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
 <p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، ولا يصح مساواته بالجيم العربية تلقائياً. لذلك فالتحويل تقريبي وليس ترجمة. الحروف التي لا مقابل مباشراً لها، مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة، تبقى مكتوبة بالعربية حتى لا تُفقد عند التحويل العكسي. وفي الاتجاه العكسي تظهر جميع الحروف بمقابلات عربية مبسطة دون رموز صوتية داخل الكلمات. بعض الأصوات الجنوبية المتمايزة، مثل s¹ وs³، قد تظهر بالحرف العربي نفسه «س»، لذلك لا يمكن استعادة التمييز الصوتي الأصلي من المقابل العربي وحده. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
 </section>
-<section class="section"><h2>أمثلة على قراءة الحروف</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">هذه أمثلة على قيمة الرمز المفرد، وليست كلمات مترجمة أو نقوشاً تاريخية.</p><div class="alphabet"><div class="letter" style="cursor:default"><div class="glyph">𐩠</div><div class="arabic-equivalent">h — هاء</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩡</div><div class="arabic-equivalent">l — لام</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩢</div><div class="arabic-equivalent">ḥ — حاء</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩣</div><div class="arabic-equivalent">m — ميم</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩤</div><div class="arabic-equivalent">q — قاف</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩥</div><div class="arabic-equivalent">w — واو</div></div></div><p class="note">ملاحظة: المقابل العربي هنا تقريب تعليمي للصوت، وليس دليلاً على أن الرمز كان يُنطق تماماً مثل الحرف العربي الحديث.</p></section>\n<section class="section"><h2>أبجدية المسند</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">اضغط على أي حرف لإضافته إلى مربع الكتابة وبناء نص بالمسند.</p><div class="alphabet" id="alphabet"></div></section>
+<section class="section"><h2>أمثلة على قراءة الحروف</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">هذه أمثلة على قيمة الرمز المفرد، وليست كلمات مترجمة أو نقوشاً تاريخية.</p><div class="alphabet"><div class="letter" style="cursor:default"><div class="glyph">𐩠</div><div class="arabic-equivalent">h — هاء</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩡</div><div class="arabic-equivalent">l — لام</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩢</div><div class="arabic-equivalent">ḥ — حاء</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩣</div><div class="arabic-equivalent">m — ميم</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩤</div><div class="arabic-equivalent">q — قاف</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩥</div><div class="arabic-equivalent">w — واو</div></div></div><p class="note">ملاحظة: المقابل العربي هنا تقريب تعليمي للصوت، وليس دليلاً على أن الرمز كان يُنطق تماماً مثل الحرف العربي الحديث.</p></section>
+<section class="section"><h2>أبجدية المسند</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">اضغط على أي حرف لإضافته إلى مربع الكتابة وبناء نص بالمسند.</p><div class="alphabet" id="alphabet"></div></section>
 </main>
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
@@ -88,11 +89,21 @@ function updateLanguageInfo(){
 const profile=languageProfiles[$('language').value]||languageProfiles.sab;
 $('languageInfo').innerHTML='<strong>'+profile.title+'</strong><p>'+profile.description+'</p><span class="scope">معلومة لغوية تعريفية؛ لا تغيّر التحويل الحرفي التجريبي أدناه. لا يمكن استنتاج هذه الظواهر من نص عربي حديث وحده.</span>';
 }
-function convert(){const s=$('source').value; if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
-let out=''; for(const ch of s){if(direction==='toMusnad'){
-// الحروف غير الممثلة مباشرة (مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة) تبقى كما هي حتى لا تضيع عند الرجوع.
+function convert(){const s=$('source').value;const hint=$('conversionHint');hint.hidden=true;hint.textContent='';if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
+let out='';for(const ch of s){if(direction==='toMusnad'){
+// الحروف التي لا يملك الجدول مقابلاً مباشراً لها تبقى كما هي ولا تُحذف.
 const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
-}else{out+=musTo.has(ch)?musTo.get(ch):ch;}} $('result').textContent=out;}
+}else{out+=musTo.has(ch)?musTo.get(ch):ch;}}
+$('result').textContent=out;
+if(direction==='toMusnad'){
+const unsupported=[...new Set([...s].filter(ch=>'اأإآٱىةؤئ'.includes(ch)))];
+if(unsupported.length){hint.textContent='تنبيه: بقيت هذه الحروف بالعربية لعدم وجود مقابل مباشر لها في جدول التحويل التجريبي: '+unsupported.join('، ')+'. لم تُحذف حتى لا تضيع من النص.';hint.hidden=false;}
+}else{
+const notices=[];
+if(s.includes('𐩪')||s.includes('𐩯'))notices.push('الرمزان 𐩪 و𐩯 يظهران هنا بالمقابل «س»، لذلك لا يحافظ الناتج العربي المبسّط على الفرق بينهما.');
+if(s.includes('𐩴'))notices.push('الرمز 𐩴 يظهر بالحرف «گ» لتمييز قيمته g عن الجيم العربية.');
+if(notices.length){hint.textContent='ملاحظة على القراءة: '+notices.join(' ');hint.hidden=false;}
+}}
 function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d==='toMusnad');$('toArabic').classList.toggle('active',d==='toArabic');$('toMusnad').setAttribute('aria-pressed',String(d==='toMusnad'));$('toArabic').setAttribute('aria-pressed',String(d==='toArabic'));$('inputLabel').textContent=d==='toMusnad'?'اكتب النص العربي هنا':'اكتب حروف المسند هنا';$('source').placeholder=d==='toMusnad'?'اكتب أو الصق النص العربي هنا...':'اكتب أو الصق حروف المسند هنا...';$('outputLabel').textContent=d==='toMusnad'?'النص بحروف المسند':'المقابل العربي التقريبي';$('source').value='';$('result').textContent='ستظهر النتيجة هنا';updateKeyboard();}
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
 
