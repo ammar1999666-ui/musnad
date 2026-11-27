@@ -94,12 +94,12 @@ const profile=languageProfiles[$('language').value]||languageProfiles.sab;
 $('languageInfo').innerHTML='<strong>'+profile.title+'</strong><p>'+profile.description+'</p><span class="scope">معلومة لغوية تعريفية؛ لا تغيّر التحويل الحرفي التجريبي أدناه. لا يمكن استنتاج هذه الظواهر من نص عربي حديث وحده.</span>';
 }
 function convert(){const s=$('source').value;const hint=$('conversionHint');hint.hidden=true;hint.textContent='';if(!s.trim()){$('result').textContent='ستظهر النتيجة هنا';return}
-let out='';for(let i=0;i<s.length;i++){const ch=s[i];if(direction==='toMusnad'){
+const chars=Array.from(s);let out='';for(let i=0;i<chars.length;i++){const ch=chars[i];if(direction==='toMusnad'){
 // تُحوّل أشكال الألف والهمزة والتاء المربوطة والألف المقصورة بتقريبات عملية معلنة؛ لا تمثل هذه التقريبات تهجئة تاريخية مؤكدة.
 const hit=arTo.find(x=>x[0]===ch);out+=hit?hit[1]:ch;
 }else{
-// العلامة ¹ أو ² أو ³ تابعة للرمز السابق؛ وقد أُدرجت بالفعل في المقابل العربي.
-if((ch==='¹'||ch==='²'||ch==='³')&&i>0&&'𐩪𐩦𐩯'.includes(s[i-1]))continue;
+// Array.from يحافظ على حروف المسند كاملة؛ فهي رموز Unicode خارج النطاق الأساسي.
+if((ch==='¹'||ch==='²'||ch==='³')&&i>0&&'𐩪𐩦𐩯'.includes(chars[i-1]))continue;
 out+=musTo.has(ch)?musTo.get(ch):ch;
 }}
 $('result').textContent=out;
