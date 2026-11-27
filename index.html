@@ -169,7 +169,8 @@ const alphabetLetters=[
 ['𐩬','n','قريب من ن','تقريب لصوت النون.'],
 ['𐩠','h','قريب من ه','تقريب لصوت الهاء.'],
 ['𐩥','w','قريب من و','تقريب لصوت الواو أو شبه الصائت المقارب لها.'],
-['𐩺','y','قريب من ي','تقريب لصوت الياء أو شبه الصائت المقارب لها.'];
+['𐩺','y','قريب من ي','تقريب لصوت الياء أو شبه الصائت المقارب لها.']
+];
 function closeLetterDetails(){ $('letterModal').classList.remove('visible'); }
 function showLetterDetails(glyph,button){
 const item=alphabetLetters.find(x=>x[0]===glyph);if(!item)return;
