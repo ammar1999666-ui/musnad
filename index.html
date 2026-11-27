@@ -35,7 +35,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <header><div class="mark">𐩠</div><h1>مُسند</h1><div class="en">M U S N A D</div><p class="tag">منقوش في التاريخ، حيّ بالتقنية</p></header>
 <main>
 <section class="panel">
-<div class="tabs"><button class="tab active" id="toMusnad">المسند ← العربية</button><button class="tab" id="toArabic">العربية ← المسند</button></div>
+<div class="tabs"><button class="tab active" id="toMusnad">من العربية إلى المسند</button><button class="tab" id="toArabic">من المسند إلى العربية</button></div>
 <div class="controls">
 <div class="field"><label for="language">اللغة الجنوبية العربية القديمة</label><select id="language"><option value="sab">السبئية</option><option value="min">المعينية</option><option value="qat">القتبانية</option><option value="had">الحضرمية</option></select></div>
 <div class="field"><label for="mode">طريقة التحويل</label><select id="mode"><option value="consonants">تقريب الصوامت (تجريبي)</option></select></div>
@@ -51,7 +51,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <div class="actions"><button class="btn primary" id="convert">تحويل النص</button><button class="btn" id="swap">تبديل الاتجاه ↔</button><button class="btn" id="copy">نسخ النتيجة</button><button class="btn" id="clear">مسح</button></div>
 <p class="note">تنبيه علمي: المسند أبجدية صامتة من 29 حرفاً استُخدمت لكتابة لغات جنوب الجزيرة القديمة. التحويل هنا تقريب للصوامت وليس ترجمة أو تهجئة تاريخية موثقة. الرموز 𐩦 و𐩪 و𐩯 تمثل الصفيريات s² وs¹ وs³، والرمز 𐩴 قيمته g، ولا يصح مساواته بالجيم العربية تلقائياً. لذلك فالتحويل تقريبي وليس ترجمة. الحروف التي لا مقابل مباشراً لها، مثل الألف والألف المقصورة وأشكال الهمزة والتاء المربوطة، تبقى مكتوبة بالعربية حتى لا تُفقد عند التحويل العكسي. وفي الاتجاه العكسي تظهر جميع الحروف بمقابلات عربية مبسطة دون رموز صوتية داخل الكلمات. بعض الأصوات الجنوبية المتمايزة، مثل s¹ وs³، قد تظهر بالحرف العربي نفسه «س»، لذلك لا يمكن استعادة التمييز الصوتي الأصلي من المقابل العربي وحده. اختيار اللغة أعلاه تعريفي حالياً ولا يغيّر قواعد التحويل.</p>
 </section>
-<section class="section"><h2>أبجدية المسند</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">اضغط على أي حرف لإضافته إلى مربع الكتابة وبناء نص بالمسند.</p><div class="alphabet" id="alphabet"></div></section>
+<section class="section"><h2>أمثلة على قراءة الحروف</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">هذه أمثلة على قيمة الرمز المفرد، وليست كلمات مترجمة أو نقوشاً تاريخية.</p><div class="alphabet"><div class="letter" style="cursor:default"><div class="glyph">𐩠</div><div class="arabic-equivalent">h — هاء</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩡</div><div class="arabic-equivalent">l — لام</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩢</div><div class="arabic-equivalent">ḥ — حاء</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩣</div><div class="arabic-equivalent">m — ميم</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩤</div><div class="arabic-equivalent">q — قاف</div></div><div class="letter" style="cursor:default"><div class="glyph">𐩥</div><div class="arabic-equivalent">w — واو</div></div></div><p class="note">ملاحظة: المقابل العربي هنا تقريب تعليمي للصوت، وليس دليلاً على أن الرمز كان يُنطق تماماً مثل الحرف العربي الحديث.</p></section>\n<section class="section"><h2>أبجدية المسند</h2><p style="color:var(--muted);font-size:12px;margin:-5px 0 12px">اضغط على أي حرف لإضافته إلى مربع الكتابة وبناء نص بالمسند.</p><div class="alphabet" id="alphabet"></div></section>
 </main>
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
@@ -71,9 +71,9 @@ const musTo=new Map([
 ['𐩴','گ'],['𐩵','د'],['𐩶','غ'],['𐩷','ط'],['𐩸','ز'],
 ['𐩹','ذ'],['𐩺','ي'],['𐩻','ث'],['𐩼','ظ'],['𐩽',' ']
 ]);
+const $=id=>document.getElementById(id);
 let direction='toMusnad';
 $('toMusnad').setAttribute('aria-pressed','true');$('toArabic').setAttribute('aria-pressed','false');
-const $=id=>document.getElementById(id);
 const languageProfiles={
 sab:{title:'السبئية',description:'تستخدم السبئية h- في صياغة السببية، وتظهر بادئة h- أيضاً في بعض الضمائر.'},
 min:{title:'المعينية',description:'تستخدم المعينية s¹- في صياغة السببية، وتندرج مع القتبانية والحضرمية في هذا النمط الصرفي.'},
@@ -93,6 +93,6 @@ function setDirection(d){direction=d; $('toMusnad').classList.toggle('active',d=
 $('language').addEventListener('change',updateLanguageInfo);updateLanguageInfo();
 $('toMusnad').onclick=()=>setDirection('toMusnad');$('toArabic').onclick=()=>setDirection('toArabic');$('convert').onclick=convert;$('source').addEventListener('input',convert);$('swap').onclick=()=>setDirection(direction==='toMusnad'?'toArabic':'toMusnad');$('clear').onclick=()=>{$('source').value='';$('result').textContent='ستظهر النتيجة هنا';};$('copy').onclick=async()=>{const t=$('result').textContent;if(t&&t!=='ستظهر النتيجة هنا'){try{await navigator.clipboard.writeText(t);$('copy').textContent='تم النسخ ✓';setTimeout(()=>$('copy').textContent='نسخ النتيجة',1400)}catch(e){$('copy').textContent='تعذّر النسخ';}}};
 $('alphabet').innerHTML=letters.map(([g,n])=>'<button type="button" class="letter" data-glyph="'+g+'" aria-label="إضافة الحرف '+g+'"><div class="glyph">'+g+'</div><div class="arabic-equivalent">'+n+'</div></button>').join('');
-$('alphabet').addEventListener('click',e=>{const key=e.target.closest('[data-glyph]');if(!key)return;if(direction!=='toArabic')setDirection('toArabic');$('source').value+=[key.dataset.glyph];convert();$('source').focus();});
+$('alphabet').addEventListener('click',e=>{const key=e.target.closest('[data-glyph]');if(!key)return;if(direction!=='toArabic')setDirection('toArabic');$('source').value+=key.dataset.glyph;convert();$('source').focus();});
 </script>
 </body></html>
