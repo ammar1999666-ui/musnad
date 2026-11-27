@@ -105,7 +105,7 @@ const approximated=[...new Set([...s].filter(ch=>'اأإآٱىةؤئ'.includes(c
 if(approximated.length)notices.push('استُخدمت تقريبات كتابية لهذه الحروف: '+approximated.join('، ')+'. الألف وأشكال الهمزة ← 𐩱، والألف المقصورة ← 𐩺، والتاء المربوطة ← 𐩩. هذه مقابلات عملية وليست قواعد إملائية تاريخية مؤكدة، وقد لا تحفظ النطق أو أصل الكلمة.');
 if(s.includes('ج'))notices.push('تنبيه: حُوّلت «ج» إلى 𐩴 ذي القيمة الصوتية g باعتباره أقرب خيار عملي في هذه الأداة، لكنه تقريب وليس تطابقاً مؤكداً مع نطق الجيم في العربية.');
 if(s.includes('س')||s.includes('ش'))notices.push('تنبيه صوتي: حُوّلت «س» إلى s¹ و«ش» إلى s² كتقريب كتابي فقط. لا يمكن استنتاج أيٍّ من الصفيريات الجنوبية الثلاث s¹ وs² وs³ بدقة من الحروف العربية الحديثة وحدها.');
-const unsupportedArabic=[...new Set([...s].filter(ch=>/\\p{Script=Arabic}/u.test(ch)&&/\\p{L}/u.test(ch)&&!supportedArabic.has(ch)))];
+const unsupportedArabic=[...new Set([...s].filter(ch=>/\p{Script=Arabic}/u.test(ch)&&/\p{L}/u.test(ch)&&!supportedArabic.has(ch)))];
 if(unsupportedArabic.length)notices.push('بقيت هذه الحروف كما هي لعدم وجود مقابل لها في جدول التحويل الحالي: '+unsupportedArabic.join('، ')+'.');
 if(notices.length){hint.textContent='ملاحظات التحويل: '+notices.join(' ');hint.hidden=false;}
 }else{
