@@ -22,7 +22,7 @@ textarea{width:100%;min-height:145px;resize:vertical;background:#171e19;border:1
 .output-wrap{margin-top:15px}.out-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;color:var(--muted);font-size:13px}.output{min-height:145px;padding:18px;border:1px solid #66583d;background:#171d18;border-radius:12px;color:var(--gold2);font:30px/1.8 'Amiri',serif;overflow-wrap:anywhere;white-space:pre-wrap}
 .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid var(--line);background:#29332b;color:var(--ink);padding:10px 17px;border-radius:10px;font:600 13px inherit;cursor:pointer}.btn.primary{background:var(--gold);color:#201d16;border-color:var(--gold)}.btn:hover{filter:brightness(1.12)}
 .note{margin:16px 0 0;padding:12px 14px;border-right:3px solid var(--gold);background:#272a21;border-radius:7px;color:#c8c2b3;font-size:12px;line-height:1.8}
-.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.latin{font:11px sans-serif;color:var(--muted);direction:ltr}
+.section{margin-top:22px}.section h2{font:700 22px 'Amiri',serif;color:var(--gold2);margin:0 0 12px}.alphabet{display:grid;grid-template-columns:repeat(auto-fit,minmax(65px,1fr));gap:8px}.letter{background:#1a211c;border:1px solid var(--line);border-radius:10px;text-align:center;padding:9px 4px}.glyph{font:30px 'Amiri',serif;color:var(--gold2)}.arabic-equivalent{font:14px 'IBM Plex Sans Arabic',sans-serif;color:var(--muted);direction:rtl}
 footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 @media(max-width:560px){.panel{padding:15px}.controls{grid-template-columns:1fr}.tabs{flex-direction:column}.output{font-size:25px}}
 </style>
@@ -47,7 +47,7 @@ footer{text-align:center;color:#777d72;font-size:11px;padding:0 15px 28px}
 <footer>مُسند | MUSNAD — إصدار تجريبي تعليمي</footer>
 <script>
 const letters=[
-['𐩠','h'],['𐩡','l'],['𐩢','ḥ'],['𐩣','m'],['𐩤','q'],['𐩥','w'],['𐩦','š'],['𐩧','r'],['𐩨','b'],['𐩩','t'],['𐩪','s¹'],['𐩫','k'],['𐩬','n'],['𐩭','ḫ'],['𐩮','ṣ'],['𐩯','s²'],['𐩰','f'],['𐩱','ʾ'],['𐩲','ʿ'],['𐩳','ḍ'],['𐩴','g'],['𐩵','d'],['𐩶','ġ'],['𐩷','ṭ'],['𐩸','z'],['𐩹','ḏ'],['𐩺','y'],['𐩻','ṯ'],['𐩼','ẓ']
+['𐩠','هـ'],['𐩡','ل'],['𐩢','ح'],['𐩣','م'],['𐩤','ق'],['𐩥','و'],['𐩦','ش'],['𐩧','ر'],['𐩨','ب'],['𐩩','ت'],['𐩪','س₁'],['𐩫','ك'],['𐩬','ن'],['𐩭','خ'],['𐩮','ص'],['𐩯','س₂'],['𐩰','ف'],['𐩱','ء'],['𐩲','ع'],['𐩳','ض'],['𐩴','ج'],['𐩵','د'],['𐩶','غ'],['𐩷','ط'],['𐩸','ز'],['𐩹','ذ'],['𐩺','ي'],['𐩻','ث'],['𐩼','ظ']
 ];
 const arTo=[['ا','𐩱'],['أ','𐩱'],['إ','𐩱'],['آ','𐩱'],['ء','𐩱'],['ب','𐩨'],['ت','𐩩'],['ث','𐩻'],['ج','𐩴'],['ح','𐩢'],['خ','𐩭'],['د','𐩵'],['ذ','𐩹'],['ر','𐩧'],['ز','𐩸'],['س','𐩪'],['ش','𐩦'],['ص','𐩮'],['ض','𐩳'],['ط','𐩷'],['ظ','𐩼'],['ع','𐩲'],['غ','𐩶'],['ف','𐩰'],['ق','𐩤'],['ك','𐩫'],['ل','𐩡'],['م','𐩣'],['ن','𐩬'],['ه','𐩠'],['ة','𐩠'],['و','𐩥'],['ؤ','𐩥'],['ي','𐩺'],['ى','𐩺'],['ئ','𐩺']];
 const musTo=new Map(arTo.map(([a,m])=>[m,a]));
